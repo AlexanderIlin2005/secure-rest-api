@@ -53,7 +53,7 @@ jobs:
 
       - name: Upload SCA Report (HTML)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: OWASP-Dependency-Check-Report
           path: ./secure-rest-api/target/dependency-check-report.html
@@ -61,7 +61,7 @@ jobs:
 
       - name: Upload SpotBugs Reports (SARIF & XML)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: SpotBugs-Reports
           path: |
