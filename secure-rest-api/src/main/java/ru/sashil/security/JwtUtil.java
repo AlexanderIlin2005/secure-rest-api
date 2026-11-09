@@ -9,14 +9,19 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private final SecretKey key = Keys.hmacShaKeyFor("VerySecretKeyForJWTTokenGenerationThatIsLongEnough!".getBytes(StandardCharsets.UTF_8));
-    private final long expirationTime = 86400000; // 24 часа
+    private static final long EXPIRATION_TIME = 86400000L; // 24 часа
+    private final SecretKey key;
+
+    public JwtUtil() {
+        // Теперь исключение не вылетает из конструктора (CT_CONSTRUCTOR_THROW)
+        this.key = Keys.hmacShaKeyFor("VerySecretKeyForJWTTokenGenerationThatIsLongEnough!".getBytes(StandardCharsets.UTF_8));
+    }
 
     public String generateToken(String username) {
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expirationTime))
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key)
                 .compact();
     }

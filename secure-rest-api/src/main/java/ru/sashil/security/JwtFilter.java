@@ -1,5 +1,6 @@
 package ru.sashil.security;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import java.util.Collections;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(JwtFilter.class);
 
     public JwtFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
@@ -30,8 +32,9 @@ public class JwtFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                         username, null, Collections.emptyList());
                 SecurityContextHolder.getContext().setAuthentication(auth);
-            } catch (Exception e) {
-                // Игнорируем невалидный токен
+            } catch (JwtException | IllegalArgumentException e) {
+                // Конкретное исключение и логирование (исправляет DE_MIGHT_IGNORE)
+                logger.warn("Invalid JWT token: {}", e.getMessage());
             }
         }
         filterChain.doFilter(request, response);

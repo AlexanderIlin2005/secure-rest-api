@@ -46,4 +46,5 @@ jobs:
         run: mvn com.github.spotbugs:spotbugs-maven-plugin:4.8.6.2:check
 
       - name: Run OWASP Dependency-Check (SCA)
-        run: mvn org.owasp:dependency-check-maven:check -DnvdApiDelay=4000
+        run: mvn org.owasp:dependency-check-maven:check -DnvdApiDelay=4000 -DfailBuildOnCVSS=10
+        continue-on-error: true

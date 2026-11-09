@@ -15,7 +15,7 @@ import ru.sashil.security.JwtFilter;
 public class SecurityConfig {
     private final JwtFilter jwtFilter;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
+    public SecurityConfig(final JwtFilter jwtFilter) {
         this.jwtFilter = jwtFilter;
     }
 
