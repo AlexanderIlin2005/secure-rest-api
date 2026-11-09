@@ -1,0 +1,49 @@
+name: Java CI with Maven and Security Scans
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: securedb
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # Переопределяем порт для БД в CI, так как мы поменяли его на 5433
+      - name: Update DB port for CI
+        run: |
+          sed -i 's|localhost:5433/securedb|localhost:5433/securedb|g' src/main/resources/application.properties
+
+      - name: Build with Maven (with tests)
+        run: mvn -B clean package
+
+      - name: Run SpotBugs (SAST)
+        run: mvn com.github.spotbugs:spotbugs-maven-plugin:4.8.6.2:check
+
+      - name: Run OWASP Dependency-Check (SCA)
+        run: mvn org.owasp:dependency-check-maven:check -DnvdApiDelay=4000
