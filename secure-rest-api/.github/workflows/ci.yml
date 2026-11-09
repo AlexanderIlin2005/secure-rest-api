@@ -10,6 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # Указываем, что все команды запускаются в папке secure-rest-api
+    defaults:
+      run:
+        working-directory: ./secure-rest-api
+
     services:
       postgres:
         image: postgres:15
@@ -33,11 +38,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-
-      # Переопределяем порт для БД в CI, так как мы поменяли его на 5433
-      - name: Update DB port for CI
-        run: |
-          sed -i 's|localhost:5433/securedb|localhost:5433/securedb|g' src/main/resources/application.properties
 
       - name: Build with Maven (with tests)
         run: mvn -B clean package
