@@ -19,7 +19,7 @@
         <java.version>17</java.version>
         <!-- Версии плагинов, чтобы не было варнингов об устаревании -->
         <spotbugs.version>4.8.6.2</spotbugs.version>
-        <dependency-check.version>12.1.9</dependency-check.version>
+        <dependency-check.version>12.2.2</dependency-check.version>
     </properties>
 
     <dependencies>
