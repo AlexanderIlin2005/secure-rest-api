@@ -17,13 +17,12 @@
 
     <properties>
         <java.version>21</java.version>
-        <!-- Версии плагинов, чтобы не было варнингов об устаревании -->
         <spotbugs.version>4.8.6.2</spotbugs.version>
         <dependency-check.version>12.2.2</dependency-check.version>
     </properties>
 
     <dependencies>
-        <!-- Spring Boot Starters -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -42,7 +41,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- JWT -->
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -61,7 +60,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Тесты -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -76,13 +75,12 @@
 
     <build>
         <plugins>
-            <!-- Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- Компилятор: строгая проверка без варнингов -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -96,7 +94,7 @@
                 </configuration>
             </plugin>
 
-            <!-- SAST: SpotBugs -->
+
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
@@ -108,7 +106,7 @@
                 </configuration>
             </plugin>
 
-            <!-- SCA: OWASP Dependency-Check -->
+
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
