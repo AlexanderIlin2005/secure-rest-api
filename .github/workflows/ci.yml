@@ -10,7 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-
     defaults:
       run:
         working-directory: ./secure-rest-api
@@ -42,14 +41,11 @@ jobs:
       - name: Build with Maven
         run: mvn -B clean package
 
-
       - name: Run SpotBugs (SAST)
         run: mvn com.github.spotbugs:spotbugs-maven-plugin:4.8.6.2:check
 
-
       - name: Run OWASP Dependency-Check (SCA)
-        run: mvn org.owasp:dependency-check-maven:check -DnvdApiDelay=4000 -DfailBuildOnCVSS=7 -Dspotbugs.sarifOutput=true
-
+        run: mvn org.owasp:dependency-check-maven:check -DnvdApiDelay=4000 -DfailBuildOnCVSS=7
 
       - name: Upload SCA Report (HTML)
         if: always()
@@ -57,7 +53,6 @@ jobs:
         with:
           name: OWASP-Dependency-Check-Report
           path: ./secure-rest-api/target/dependency-check-report.html
-
 
       - name: Upload SpotBugs Reports (SARIF & XML)
         if: always()
