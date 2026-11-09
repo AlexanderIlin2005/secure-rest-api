@@ -103,6 +103,8 @@
                     <effort>Max</effort>
                     <threshold>Low</threshold>
                     <failOnError>true</failOnError>
+                    <xmlOutput>true</xmlOutput>
+                    <sarifOutput>true</sarifOutput>
                 </configuration>
             </plugin>
 

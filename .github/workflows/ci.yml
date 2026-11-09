@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # Указываем, что все команды запускаются в папке secure-rest-api
+
     defaults:
       run:
         working-directory: ./secure-rest-api
@@ -42,8 +42,28 @@ jobs:
       - name: Build with Maven
         run: mvn -B clean package
 
+
       - name: Run SpotBugs (SAST)
         run: mvn com.github.spotbugs:spotbugs-maven-plugin:4.8.6.2:check
 
+
       - name: Run OWASP Dependency-Check (SCA)
-        run: mvn org.owasp:dependency-check-maven:check -DnvdApiDelay=4000 -DfailBuildOnCVSS=7
+        run: mvn org.owasp:dependency-check-maven:check -DnvdApiDelay=4000 -DfailBuildOnCVSS=7 -Dspotbugs.sarifOutput=true
+
+
+      - name: Upload SCA Report (HTML)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: OWASP-Dependency-Check-Report
+          path: ./secure-rest-api/target/dependency-check-report.html
+
+
+      - name: Upload SpotBugs Reports (SARIF & XML)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SpotBugs-Reports
+          path: |
+            ./secure-rest-api/target/spotbugsXml.xml
+            ./secure-rest-api/target/spotbugsSarif.json
