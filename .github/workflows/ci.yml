@@ -49,14 +49,14 @@ jobs:
 
       - name: Upload SCA HTML Report
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: OWASP-Dependency-Check-Report
           path: ./secure-rest-api/target/dependency-check-report.html
 
       - name: Upload SpotBugs Reports(SARIF-XML)
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: SpotBugs-Reports
           path: |
