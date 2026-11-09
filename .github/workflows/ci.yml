@@ -47,14 +47,14 @@ jobs:
       - name: Run OWASP Dependency-Check (SCA)
         run: mvn org.owasp:dependency-check-maven:check -DnvdApiDelay=4000 -DfailBuildOnCVSS=7
 
-      - name: Upload SCA Report (HTML)
+      - name: Upload SCA HTML Report
         if: always()
         uses: actions/upload-artifact@v5
         with:
           name: OWASP-Dependency-Check-Report
           path: ./secure-rest-api/target/dependency-check-report.html
 
-      - name: Upload SpotBugs Reports (SARIF & XML)
+      - name: Upload SpotBugs Reports(SARIF & XML)
         if: always()
         uses: actions/upload-artifact@v5
         with:
